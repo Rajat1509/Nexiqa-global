@@ -59,7 +59,7 @@ export default function BookAMeeting() {
               <h2 className="font-display font-semibold text-lg mb-6">Prefer to reach out directly?</h2>
               <div className="space-y-4 text-sm">
                 <a href="mailto:hello@nexiqa.global" className="flex items-center gap-3 text-muted hover:text-ink transition-colors">
-                  <Mail size={16} className="text-cyan" /> hello@nexiqa.global
+                  <Mail size={16} className="text-cyan" /> info@nexiqaglobal.com
                 </a>
                 <a href="https://instagram.com/nexiqa.global" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-ink transition-colors">
                   <Instagram size={16} className="text-cyan" /> @nexiqa.global

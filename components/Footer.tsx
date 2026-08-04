@@ -45,10 +45,10 @@ export default function Footer() {
                 <Instagram size={15} className="text-cyan" /> @nexiqa.global
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={15} className="text-cyan" /> hello@nexiqa.global
+                <Mail size={15} className="text-cyan" /> info@nexiqaglobal.com
               </li>
               <li className="flex items-center gap-2">
-                <Globe size={15} className="text-cyan" /> www.nexiqa.global
+                <Globe size={15} className="text-cyan" /> www.nexiqaglobal.com
               </li>
             </ul>
           </div>
