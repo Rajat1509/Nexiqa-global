@@ -21,14 +21,62 @@ export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  // function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   // Simulated submission — connect to your booking/email backend here.
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     setSubmitted(true);
+  //   }, 700);
+  // }
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    // Simulated submission — connect to your booking/email backend here.
-    setTimeout(() => {
-      setLoading(false);
+
+    const form = e.currentTarget;
+
+    const formData = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      company: (form.elements.namedItem("company") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      service: (form.elements.namedItem("service") as HTMLSelectElement).value,
+      date: (form.elements.namedItem("date") as HTMLInputElement).value,
+      time: (form.elements.namedItem("time") as HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const response = await fetch(
+        "https://rajat-gaur.vercel.app/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
       setSubmitted(true);
-    }, 700);
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Failed to send request."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (submitted) {
