@@ -34,7 +34,7 @@ export default function Hero() {
               href="#services"
               className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink hover:border-cyan/50 hover:bg-surface transition-colors"
             >
-              Explore Services
+              Explore Our Services
             </a>
           </div>
         </div>
