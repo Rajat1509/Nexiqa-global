@@ -42,8 +42,8 @@ export default function BookingForm() {
       company: (form.elements.namedItem("company") as HTMLInputElement).value,
       phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
       service: (form.elements.namedItem("service") as HTMLSelectElement).value,
-      date: (form.elements.namedItem("date") as HTMLInputElement).value,
-      time: (form.elements.namedItem("time") as HTMLSelectElement).value,
+      preferredDate: (form.elements.namedItem("date") as HTMLInputElement).value,
+      preferredTime: (form.elements.namedItem("time") as HTMLSelectElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
 
