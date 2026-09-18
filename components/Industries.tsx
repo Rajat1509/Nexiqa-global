@@ -56,7 +56,7 @@ export default function Industries() {
   return (
     <section id="industries" className="py-24 lg:py-32 border-t border-line bg-elevated relative overflow-hidden">
       <div className="absolute inset-0 grid-lines opacity-40" />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[1280px] px-6 lg:px-8">
         <div className="max-w-2xl mb-16">
           <p className="eyebrow text-cyan mb-4">Where we work</p>
           <h2 className="font-display font-semibold text-3xl sm:text-4xl">Industries We Serve</h2>
