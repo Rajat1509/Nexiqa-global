@@ -9,8 +9,11 @@ import {
   Linkedin,
   Globe,
   ChevronDown,
+  MessageCircle,
+  Phone,
 } from "lucide-react";
 import { useState } from "react";
+import { PHONE_DISPLAY, TEL_URL, WHATSAPP_URL } from "@/lib/contact";
 
 type FooterSectionProps = {
   title: string;
@@ -426,6 +429,54 @@ export default function Footer() {
 
                   <span className="break-all">
                     info@nexiqaglobal.com
+                  </span>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    hover:text-ink
+                    transition-colors
+                  "
+                >
+                  <MessageCircle
+                    size={14}
+                    className="text-cyan shrink-0"
+                    strokeWidth={1.8}
+                  />
+
+                  <span>
+                    WhatsApp
+                  </span>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href={TEL_URL}
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    hover:text-ink
+                    transition-colors
+                  "
+                >
+                  <Phone
+                    size={14}
+                    className="text-cyan shrink-0"
+                    strokeWidth={1.8}
+                  />
+
+                  <span>
+                    Call {PHONE_DISPLAY}
                   </span>
                 </a>
               </li>

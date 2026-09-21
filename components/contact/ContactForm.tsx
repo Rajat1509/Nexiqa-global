@@ -9,11 +9,13 @@ import {
   Clock3,
   Instagram,
   Mail,
+  MessageCircle,
   Phone,
   Send,
   User,
 } from "lucide-react";
 import { GlowCard } from "@/components/page/Section";
+import { PHONE_DISPLAY, TEL_URL, WHATSAPP_URL } from "@/lib/contact";
 
 const serviceOptions = [
   "Website Development",
@@ -143,8 +145,32 @@ export default function ContactForm() {
         <GlowCard className="p-5 sm:p-6">
           <h2 className="mb-5 text-base font-semibold text-white">Contact information</h2>
           <div className="space-y-4">
-            <InfoRow icon={<Mail size={15} />} title="Email" value="info@nexiqaglobal.com" />
-            <InfoRow icon={<Instagram size={15} />} title="Instagram" value="@nexiqa.global" />
+            <InfoRow
+              icon={<Mail size={15} />}
+              title="Email"
+              value="info@nexiqaglobal.com"
+              href="mailto:info@nexiqaglobal.com"
+            />
+            <InfoRow
+              icon={<MessageCircle size={15} />}
+              title="WhatsApp"
+              value="Chat on WhatsApp"
+              href={WHATSAPP_URL}
+              external
+            />
+            <InfoRow
+              icon={<Phone size={15} />}
+              title="Call"
+              value={PHONE_DISPLAY}
+              href={TEL_URL}
+            />
+            <InfoRow
+              icon={<Instagram size={15} />}
+              title="Instagram"
+              value="@nexiqa.global"
+              href="https://www.instagram.com/nexiqa.global/"
+              external
+            />
             <InfoRow
               icon={<Clock3 size={15} />}
               title="Response time"
@@ -233,13 +259,17 @@ function InfoRow({
   icon,
   title,
   value,
+  href,
+  external,
 }: {
   icon: React.ReactNode;
   title: string;
   value: string;
+  href?: string;
+  external?: boolean;
 }) {
-  return (
-    <div className="flex items-center gap-3">
+  const content = (
+    <>
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
         {icon}
       </div>
@@ -247,6 +277,22 @@ function InfoRow({
         <p className="text-xs font-medium text-slate-200">{title}</p>
         <p className="mt-0.5 text-xs text-[#7f9cac]">{value}</p>
       </div>
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        className="flex items-center gap-3 transition-colors hover:text-white"
+        {...(external
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return <div className="flex items-center gap-3">{content}</div>;
 }

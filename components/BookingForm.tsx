@@ -17,6 +17,7 @@ import {
   User,
 } from "lucide-react";
 import { GlowCard } from "@/components/page/Section";
+import { PHONE_DISPLAY, TEL_URL, WHATSAPP_URL } from "@/lib/contact";
 
 const services = [
   "Website Development",
@@ -261,6 +262,33 @@ export default function BookingForm() {
                 <p className="text-sm font-medium text-cyan-300">@nexiqa.global</p>
                 <p className="mt-0.5 text-xs text-[#7f9cac]">
                   Follow us for updates and insights.
+                </p>
+              </div>
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-cyan-500/20 text-cyan-400">
+                <MessageCircle size={14} />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-cyan-300">WhatsApp</p>
+                <p className="mt-0.5 text-xs text-[#7f9cac]">
+                  Chat on WhatsApp.
+                </p>
+              </div>
+            </a>
+            <a href={TEL_URL} className="flex items-start gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-cyan-500/20 text-cyan-400">
+                <Phone size={14} />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-cyan-300">{PHONE_DISPLAY}</p>
+                <p className="mt-0.5 text-xs text-[#7f9cac]">
+                  Tap to call us directly.
                 </p>
               </div>
             </a>
