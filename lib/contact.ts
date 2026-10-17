@@ -6,3 +6,5 @@ export const PHONE_DISPLAY = "+91 91053 39127";
 export const WHATSAPP_URL = `https://wa.me/${PHONE_E164}`;
 
 export const TEL_URL = `tel:+${PHONE_E164}`;
+
+export const CONTACT_API_URL = "https://rajat-gaur.vercel.app/api/contact";

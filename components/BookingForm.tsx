@@ -17,7 +17,12 @@ import {
   User,
 } from "lucide-react";
 import { GlowCard } from "@/components/page/Section";
-import { PHONE_DISPLAY, TEL_URL, WHATSAPP_URL } from "@/lib/contact";
+import {
+  CONTACT_API_URL,
+  PHONE_DISPLAY,
+  TEL_URL,
+  WHATSAPP_URL,
+} from "@/lib/contact";
 
 const services = [
   "Website Development",
@@ -60,15 +65,71 @@ const initialForm: FormData = {
 export default function BookingForm() {
   const [form, setForm] = useState<FormData>(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const updateField = (field: keyof FormData, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setError("");
+    setSubmitting(true);
+
+    const message = [
+      form.message.trim() ||
+        "A meeting request was submitted from the Nexiqa Global website.",
+      "",
+      `Service: ${form.service}`,
+      `Preferred date: ${form.date}`,
+      `Preferred time: ${form.time}`,
+      form.company.trim() && `Company: ${form.company.trim()}`,
+      form.phone.trim() && `Phone: ${form.phone.trim()}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    try {
+      const response = await fetch(CONTACT_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          company: form.company.trim(),
+          phone: form.phone.trim(),
+          service: form.service,
+          preferredDate: form.date,
+          preferredTime: form.time,
+          message,
+        }),
+      });
+
+      const data = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+        message?: string;
+      } | null;
+
+      if (!response.ok || !data?.ok) {
+        throw new Error(
+          data?.error || data?.message || "Unable to send your request right now.",
+        );
+      }
+
+      setSubmitted(true);
+      setForm(initialForm);
+      window.setTimeout(() => setSubmitted(false), 5000);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Unable to send your request right now.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -121,9 +182,10 @@ export default function BookingForm() {
                 onChange={(e) => updateField("company", e.target.value)}
               />
             </Field>
-            <Field label="Service you're interested in">
+            <Field label="Service you're interested in" required>
               <Select
                 icon={<MessageCircle size={14} />}
+                required
                 value={form.service}
                 onChange={(e) => updateField("service", e.target.value)}
               >
@@ -135,19 +197,21 @@ export default function BookingForm() {
                 ))}
               </Select>
             </Field>
-            <Field label="Preferred date">
+            <Field label="Preferred date" required>
               <Input
                 icon={<CalendarDays size={14} />}
                 type="date"
+                required
                 value={form.date}
                 onChange={(e) => updateField("date", e.target.value)}
               />
             </Field>
           </div>
 
-          <Field label="Preferred time">
+          <Field label="Preferred time" required>
             <Select
               icon={<Clock3 size={14} />}
+              required
               value={form.time}
               onChange={(e) => updateField("time", e.target.value)}
             >
@@ -174,9 +238,13 @@ export default function BookingForm() {
             </div>
           </Field>
 
+          {error ? (
+            <p className="text-xs text-red-400">{error}</p>
+          ) : null}
+
           <button
             type="submit"
-            disabled={submitted}
+            disabled={submitted || submitting}
             className="group inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 text-xs font-semibold text-[#00121f] transition hover:scale-[1.02] disabled:opacity-80"
           >
             {submitted ? (
@@ -184,6 +252,8 @@ export default function BookingForm() {
                 <CheckCircle2 size={15} />
                 Meeting Booked
               </>
+            ) : submitting ? (
+              <>Sending...</>
             ) : (
               <>
                 <CalendarDays size={14} />
